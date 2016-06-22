@@ -55,7 +55,7 @@ if __name__ == "__main__":
             (labels[filename.split('/')[-1]], content)).\
         map(lambda (isSpam, content):
             LabeledPoint(str(isSpam), getFeatures(content)))
-    
+
     training, test = emailFeatures.randomSplit([0.6, 0.4], seed=random.randint(1, 100000))
 
     model = NaiveBayes.train(training, 1.0)
