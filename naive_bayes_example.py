@@ -4,6 +4,7 @@ from pyspark.mllib.classification import NaiveBayes
 from pyspark.mllib.linalg import Vectors
 from pyspark.mllib.regression import LabeledPoint
 import sys
+import random
 
 
 """
@@ -55,7 +56,7 @@ if __name__ == "__main__":
         map(lambda (isSpam, content):
             LabeledPoint(str(isSpam), getFeatures(content)))
     
-    training, test = emailFeatures.randomSplit([0.6, 0.4], seed=9023)
+    training, test = emailFeatures.randomSplit([0.6, 0.4], seed=random.randint(1, 100000))
 
     model = NaiveBayes.train(training, 1.0)
 

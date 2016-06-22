@@ -3,7 +3,7 @@ Naive Bayes spam filter using Apache Spark
 
 This is a spam filter that uses a Naive Bayes algorithm with a Bernoulli model to classify emails as spam or not. It leverages Apache Spark to distribute the tasks.
 
-The project is built using the CSDMC2010_SPAM dataset (http://csmining.org/index.php/spam-email-datasets-.html). 
+The project is built using the CSDMC2010_SPAM dataset (http://csmining.org/index.php/spam-email-datasets-.html). Similar to the referred dataset, the project assumes a folder containing all the emails that will be used (for training and testing), and a separate files containing a list of labels.
 
 
 Outstanding tasks:
