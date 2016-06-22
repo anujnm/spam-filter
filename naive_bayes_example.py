@@ -3,6 +3,7 @@ from pyspark import SparkContext
 from pyspark.mllib.classification import NaiveBayes
 from pyspark.mllib.linalg import Vectors
 from pyspark.mllib.regression import LabeledPoint
+import sys
 
 
 """
@@ -30,18 +31,24 @@ def getFeatures(content):
 
 if __name__ == "__main__":
 
+    if len(sys.argv) < 3:
+        raise Exception("Please provide a path to the labels file, and the emails folder")
+    
+    path_to_label_file = sys.argv[1]
+    path_to_emails = sys.argv[2]
+
     sc = SparkContext(appName="spam-filter")
 
     # Process file containing data labels.
     # labels: {filename: isSpam (1 or 0)}
-    labels = sc.textFile('data/emails/SPAMTrain.label').\
+    labels = sc.textFile(path_to_label_file).\
         map(lambda line: line.split()).\
         map(lambda (num, name): (name, int(num))).\
         collectAsMap()
 
     # Parse email folder for all emails, convert into feature set
     # emails: [ (isSpam, content) ]
-    emailFeatures = sc.wholeTextFiles('data/emails/extracted').\
+    emailFeatures = sc.wholeTextFiles(path_to_emails).\
         map(lambda (filename, content):
             (labels[filename.split('/')[-1]], content)).\
         map(lambda (isSpam, content):
